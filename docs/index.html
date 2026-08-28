@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RedactAI Help</title>
+<title>ClauseSmith Help</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -130,14 +130,14 @@
 <body>
 
 <div class="header-row">
-  <img src="assets/redactai-icon.png" alt="RedactAI icon" width="64" height="64">
-  <h1>RedactAI</h1>
+  <img src="assets/clausesmith-icon.png" alt="ClauseSmith icon" width="64" height="64">
+  <h1>ClauseSmith</h1>
 </div>
 <p class="tagline">A LibreOffice Writer extension that talks to a local Ollama server for drafting, brainstorming, and rewriting text.</p>
 
 <div class="btn-row">
-  <a class="btn" href="https://github.com/RunningWithScrewDrivers/RedactAI-releases/releases">Download latest release</a>
-  <a class="btn secondary" href="https://github.com/RunningWithScrewDrivers/RedactAI-releases">View on GitHub</a>
+  <a class="btn" href="https://github.com/RunningWithScrewDrivers/ClauseSmith-releases/releases">Download latest release</a>
+  <a class="btn secondary" href="https://github.com/RunningWithScrewDrivers/ClauseSmith-releases">View on GitHub</a>
 </div>
 
 <nav class="toc">
@@ -245,7 +245,7 @@
 <h4>Step 4: Verify the local API</h4>
 <p>Test the server locally from the terminal:</p>
 <pre><code>curl http://localhost:11434</code></pre>
-<p>If it returns &ldquo;Ollama is running&rdquo;, local integrations like RedactAI can communicate with the service.</p>
+<p>If it returns &ldquo;Ollama is running&rdquo;, local integrations like ClauseSmith can communicate with the service.</p>
 
 <h3>Useful Ollama commands</h3>
 <ul>
@@ -255,12 +255,18 @@
 </ul>
 
 <h2 id="install">Install</h2>
-<p>First, download <code>redactai.oxt</code> from the <a href="https://github.com/RunningWithScrewDrivers/RedactAI-releases/releases">Releases page</a>. Then use either method below.</p>
+
+<div class="callout">
+  <p><strong>Upgrading from RedactAI?</strong> Uninstall it first. This extension was called RedactAI up to 0.5.1, and the rename changed its internal identifier. LibreOffice identifies extensions by that identifier, so it treats ClauseSmith as an unrelated extension rather than an upgrade &mdash; install it without removing RedactAI and you'll end up with <em>both</em>: two Extension Manager entries, two Tools menus, and two sidebar decks.</p>
+  <p>Remove RedactAI via <strong>Tools &gt; Extension Manager</strong> first. Your settings carry over automatically &mdash; ClauseSmith reads the old configuration if it doesn't have its own yet.</p>
+</div>
+
+<p>Download <code>clausesmith.oxt</code> from the <a href="https://github.com/RunningWithScrewDrivers/ClauseSmith-releases/releases">Releases page</a>, then use either method below.</p>
 
 <h3>Method 1: Double-click install (easiest)</h3>
 <ol>
   <li>Make sure LibreOffice is installed on your computer.</li>
-  <li>Locate the downloaded <code>redactai.oxt</code> file in your file explorer.</li>
+  <li>Locate the downloaded <code>clausesmith.oxt</code> file in your file explorer.</li>
   <li>Double-click the <code>.oxt</code> file &mdash; LibreOffice launches and automatically opens the Extension Manager.</li>
   <li>Choose <strong>Only for me</strong> or <strong>For all users</strong> if prompted.</li>
   <li>Click <strong>Accept</strong> if a license agreement appears, then restart LibreOffice.</li>
@@ -271,7 +277,7 @@
   <li>Open LibreOffice (or open Writer directly).</li>
   <li>From the top menu, go to <strong>Tools &gt; Extension Manager&hellip;</strong> (or press <strong>Ctrl+Alt+E</strong>).</li>
   <li>In the Extension Manager window, click <strong>Add&hellip;</strong>.</li>
-  <li>Browse to your downloaded <code>redactai.oxt</code> file, select it, and click <strong>Open</strong>.</li>
+  <li>Browse to your downloaded <code>clausesmith.oxt</code> file, select it, and click <strong>Open</strong>.</li>
   <li>Choose <strong>Only for me</strong> or <strong>For all users</strong> if prompted.</li>
   <li>Close the Extension Manager window and restart LibreOffice &mdash; extensions are only picked up on startup.</li>
 </ol>
@@ -279,26 +285,26 @@
 <p>To uninstall: remove it via <strong>Tools &gt; Extension Manager</strong>.</p>
 
 <h2 id="first-run">First run</h2>
-<p>Open <strong>Tools &gt; RedactAI &gt; Settings</strong> and set the model name to whatever you've pulled (defaults to <code>llama3.1</code>). If Ollama runs on another machine or a non-default port, update the endpoint here too. The sidebar panel reads the same settings file, so there's nothing separate to configure there.</p>
+<p>Open <strong>Tools &gt; ClauseSmith &gt; Settings</strong> and set the model name to whatever you've pulled (defaults to <code>llama3.1</code>). If Ollama runs on another machine or a non-default port, update the endpoint here too. The sidebar panel reads the same settings file, so there's nothing separate to configure there.</p>
 
 <h2 id="usage">Usage</h2>
-<p>There are two ways to use RedactAI:</p>
+<p>There are two ways to use ClauseSmith:</p>
 
 <h3>Sidebar panel (View &gt; Sidebar)</h3>
 <p>Quick rewrite actions and a custom instruction, working from your current selection. Nothing touches your document until you explicitly commit it.</p>
 <table>
   <tr><th>Feature</th><th>What it does</th></tr>
-  <tr><td>Original</td><td>Read-only preview that auto-updates as you select text in Writer &mdash; there's no &ldquo;send to RedactAI&rdquo; step.</td></tr>
+  <tr><td>Original</td><td>Read-only preview that auto-updates as you select text in Writer &mdash; there's no &ldquo;send to ClauseSmith&rdquo; step.</td></tr>
   <tr><td>Quick actions</td><td>Improve / Fix grammar / Shorten / Make formal / Summarize, applied to the current selection.</td></tr>
   <tr><td>Custom</td><td>Type a free-text instruction in the Instruction field, then press <strong>Custom</strong> to apply it the same way a quick action would be.</td></tr>
   <tr><td>Suggested rewrite</td><td>Editable. Nothing is written to the document until you choose <strong>Replace Selection</strong>, <strong>Insert Below</strong>, <strong>Copy</strong>, or <strong>Discard</strong>.</td></tr>
 </table>
 
-<h3>Tools &gt; RedactAI menu</h3>
+<h3>Tools &gt; ClauseSmith menu</h3>
 <p>The menu covers what the sidebar panel structurally can't:</p>
 <table>
   <tr><th>Item</th><th>What it does</th></tr>
-  <tr><td>Show RedactAI Panel</td><td>Opens and focuses the sidebar deck &mdash; the discoverable way in, if you didn't know the panel was there.</td></tr>
+  <tr><td>Show ClauseSmith Panel</td><td>Opens and focuses the sidebar deck &mdash; the discoverable way in, if you didn't know the panel was there.</td></tr>
   <tr><td>Brainstorm&hellip;</td><td>Generates ideas as a bullet list. The topic is pre-filled from your selection when there is one and editable either way, so it works from a blank document too. Results land in an editable pane with <strong>Insert</strong> and <strong>Copy</strong>.</td></tr>
   <tr><td>Settings&hellip;</td><td>Endpoint, model, temperature, timeout, and system prompt. The sidebar panel reads the same settings.</td></tr>
 </table>
@@ -314,8 +320,8 @@
 </ul>
 
 <footer>
-  RedactAI &mdash; source is maintained privately; this site and the
-  <a href="https://github.com/RunningWithScrewDrivers/RedactAI-releases/releases">releases</a>
+  ClauseSmith &mdash; source is maintained privately; this site and the
+  <a href="https://github.com/RunningWithScrewDrivers/ClauseSmith-releases/releases">releases</a>
   are published from it automatically.
 </footer>
 
