@@ -285,18 +285,23 @@
 <p>There are two ways to use RedactAI:</p>
 
 <h3>Sidebar panel (View &gt; Sidebar)</h3>
-<p>Quick rewrite actions, a custom instruction, and Brainstorm, all working from your current selection &mdash; with a review step before anything touches the document.</p>
+<p>Quick rewrite actions and a custom instruction, working from your current selection. Nothing touches your document until you explicitly commit it.</p>
 <table>
   <tr><th>Feature</th><th>What it does</th></tr>
-  <tr><td>Original</td><td>Read-only preview that auto-updates as you select text in Writer.</td></tr>
+  <tr><td>Original</td><td>Read-only preview that auto-updates as you select text in Writer &mdash; there's no &ldquo;send to RedactAI&rdquo; step.</td></tr>
   <tr><td>Quick actions</td><td>Improve / Fix grammar / Shorten / Make formal / Summarize, applied to the current selection.</td></tr>
-  <tr><td>Custom</td><td>Free-text rewrite instruction, applied the same way a quick action would be.</td></tr>
-  <tr><td>Brainstorm on Selection</td><td>5 bullet ideas using the selection as topic.</td></tr>
+  <tr><td>Custom</td><td>Type a free-text instruction in the Instruction field, then press <strong>Custom</strong> to apply it the same way a quick action would be.</td></tr>
   <tr><td>Suggested rewrite</td><td>Editable. Nothing is written to the document until you choose <strong>Replace Selection</strong>, <strong>Insert Below</strong>, <strong>Copy</strong>, or <strong>Discard</strong>.</td></tr>
 </table>
 
 <h3>Tools &gt; RedactAI menu</h3>
-<p>The original popup-dialog versions (Generate / Brainstorm / Rewrite) &mdash; these auto-insert directly with no review step &mdash; plus Settings. Kept as a fallback alongside the sidebar panel.</p>
+<p>The menu covers what the sidebar panel structurally can't:</p>
+<table>
+  <tr><th>Item</th><th>What it does</th></tr>
+  <tr><td>Show RedactAI Panel</td><td>Opens and focuses the sidebar deck &mdash; the discoverable way in, if you didn't know the panel was there.</td></tr>
+  <tr><td>Brainstorm&hellip;</td><td>Generates ideas as a bullet list. The topic is pre-filled from your selection when there is one and editable either way, so it works from a blank document too. Results land in an editable pane with <strong>Insert</strong> and <strong>Copy</strong>.</td></tr>
+  <tr><td>Settings&hellip;</td><td>Endpoint, model, temperature, timeout, and system prompt. The sidebar panel reads the same settings.</td></tr>
+</table>
 
 <h2 id="troubleshooting">Troubleshooting</h2>
 <div class="callout">
