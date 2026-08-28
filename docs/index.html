@@ -4,11 +4,233 @@
 <meta charset="UTF-8">
 <title>RedactAI Help</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5c5c5c;
+    --border: #e0e0e0;
+    --code-bg: #f4f4f4;
+    --accent: #2a5db0;
+    --callout-bg: #fff8e6;
+    --callout-border: #e8c56b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181c;
+      --fg: #e8e8e8;
+      --muted: #a0a0a0;
+      --border: #30333a;
+      --code-bg: #21242b;
+      --accent: #7aa7ef;
+      --callout-bg: #2a2410;
+      --callout-border: #6b5a1f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 5rem;
+  }
+  h1, h2, h3 { line-height: 1.25; }
+  h1 { font-size: 2rem; margin-bottom: 0.25rem; }
+  h2 {
+    font-size: 1.35rem;
+    margin-top: 2.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+  p.tagline { color: var(--muted); margin-top: 0; font-size: 1.05rem; }
+  code {
+    background: var(--code-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 0.9rem 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  pre code { background: none; padding: 0; }
+  a { color: var(--accent); }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: 0.35rem; }
+  .callout {
+    background: var(--callout-bg);
+    border: 1px solid var(--callout-border);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    margin: 1.2rem 0;
+  }
+  .callout p:first-child { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+  .btn-row { margin: 1.5rem 0; }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-right: 0.6rem;
+  }
+  .btn.secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th { color: var(--muted); font-weight: 600; font-size: 0.9em; }
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9em;
+  }
+  nav.toc { margin: 1.5rem 0 2rem; }
+  nav.toc ul { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+  nav.toc a { font-size: 0.92em; }
+</style>
 </head>
 <body>
+
 <h1>RedactAI</h1>
-<p>Help documentation is coming soon.</p>
-<p>In the meantime, download the extension from the
-<a href="https://github.com/RunningWithScrewDrivers/RedactAI-releases/releases">Releases page</a>.</p>
+<p class="tagline">A LibreOffice Writer extension that talks to a local Ollama server for drafting, brainstorming, and rewriting text.</p>
+
+<div class="btn-row">
+  <a class="btn" href="https://github.com/RunningWithScrewDrivers/RedactAI-releases/releases">Download latest release</a>
+  <a class="btn secondary" href="https://github.com/RunningWithScrewDrivers/RedactAI-releases">View on GitHub</a>
+</div>
+
+<nav class="toc">
+  <ul>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#ollama-windows">Ollama on Windows</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#first-run">First run</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+  </ul>
+</nav>
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+  <li>LibreOffice 7.0+</li>
+  <li>
+    <a href="https://ollama.com">Ollama</a> installed and a model pulled, e.g.:
+    <pre><code>ollama pull llama3.1</code></pre>
+    Confirm it's serving: <code>curl http://localhost:11434/api/tags</code>
+  </li>
+  <li>
+    On Linux, the LibreOffice Python script provider must be installed
+    (usually a separate package from the base LibreOffice install):
+    <pre><code>sudo apt install libreoffice-script-provider-python</code></pre>
+    Windows and macOS bundle this with LibreOffice already.
+  </li>
+</ul>
+
+<h2 id="ollama-windows">Setting up Ollama on Windows</h2>
+<p>If you're on Windows and don't have Ollama running yet, here's the full setup from scratch.</p>
+
+<h3>Step 1: Download and install Ollama</h3>
+<ol>
+  <li>Go to the official Ollama website: <a href="https://ollama.com/download">ollama.com/download</a>.</li>
+  <li>Click <strong>Download for Windows</strong> to download <code>OllamaSetup.exe</code>.</li>
+  <li>Run <code>OllamaSetup.exe</code> and click <strong>Install</strong>.</li>
+  <li>Once installation completes, Ollama runs automatically in the background. You'll see a small Ollama icon in the Windows system tray (bottom-right corner, near the clock).</li>
+</ol>
+
+<h3>Step 2: Open a terminal</h3>
+<ol>
+  <li>Press <strong>Windows key + R</strong>, type <code>cmd</code> (or <code>powershell</code>), and press Enter.</li>
+  <li>Verify Ollama is installed:
+    <pre><code>ollama --version</code></pre>
+    You should see a response like <code>ollama version is 0.x.x</code>.
+  </li>
+</ol>
+
+<h3>Step 3: Pull and run a model</h3>
+<p>In the same terminal, download and launch a model, e.g. <code>gemma2:2b</code>:</p>
+<pre><code>ollama run gemma2:2b</code></pre>
+<ul>
+  <li>Ollama will download the model weights (<code>gemma2:2b</code> is about 1.6 GB).</li>
+  <li>Once downloaded, you'll see a <code>&gt;&gt;&gt;</code> prompt, meaning the model is loaded and ready to chat.</li>
+</ul>
+
+<h3>Step 4: Verify the local API (for LibreOffice / RedactAI)</h3>
+<p>Ollama automatically exposes a local HTTP API on port <code>11434</code> as soon as it's running &mdash; no extra setup needed. To confirm RedactAI will be able to reach it, open a browser and go to <code>http://localhost:11434/</code>. If you see &ldquo;Ollama is running&rdquo;, the endpoint is live and ready to accept requests from the extension.</p>
+
+<h3>Useful Ollama commands</h3>
+<ul>
+  <li>Exit interactive chat: type <code>/bye</code> or press <strong>Ctrl+D</strong>.</li>
+  <li>List downloaded models: <code>ollama list</code>.</li>
+  <li>Pre-download a model without starting chat: <code>ollama pull gemma2:2b</code>.</li>
+</ul>
+
+<h2 id="install">Install</h2>
+<ol>
+  <li>Download <code>redactai.oxt</code> from the <a href="https://github.com/RunningWithScrewDrivers/RedactAI-releases/releases">Releases page</a>.</li>
+  <li>In LibreOffice: <strong>Tools &gt; Extension Manager &gt; Add</strong>, then select the downloaded <code>redactai.oxt</code>.</li>
+  <li><strong>Restart LibreOffice</strong> &mdash; extensions are only picked up on startup.</li>
+</ol>
+<p>To uninstall: remove it via <strong>Tools &gt; Extension Manager</strong>.</p>
+
+<h2 id="first-run">First run</h2>
+<p>Open <strong>Tools &gt; RedactAI &gt; Settings</strong> and set the model name to whatever you've pulled (defaults to <code>llama3.1</code>). If Ollama runs on another machine or a non-default port, update the endpoint here too. The sidebar panel reads the same settings file, so there's nothing separate to configure there.</p>
+
+<h2 id="usage">Usage</h2>
+<p>There are two ways to use RedactAI:</p>
+
+<h3>Sidebar panel (View &gt; Sidebar)</h3>
+<p>Quick rewrite actions, a custom instruction, and Brainstorm, all working from your current selection &mdash; with a review step before anything touches the document.</p>
+<table>
+  <tr><th>Feature</th><th>What it does</th></tr>
+  <tr><td>Original</td><td>Read-only preview that auto-updates as you select text in Writer.</td></tr>
+  <tr><td>Quick actions</td><td>Improve / Fix grammar / Shorten / Make formal / Summarize, applied to the current selection.</td></tr>
+  <tr><td>Custom</td><td>Free-text rewrite instruction, applied the same way a quick action would be.</td></tr>
+  <tr><td>Brainstorm on Selection</td><td>5 bullet ideas using the selection as topic.</td></tr>
+  <tr><td>Suggested rewrite</td><td>Editable. Nothing is written to the document until you choose <strong>Replace Selection</strong>, <strong>Insert Below</strong>, <strong>Copy</strong>, or <strong>Discard</strong>.</td></tr>
+</table>
+
+<h3>Tools &gt; RedactAI menu</h3>
+<p>The original popup-dialog versions (Generate / Brainstorm / Rewrite) &mdash; these auto-insert directly with no review step &mdash; plus Settings. Kept as a fallback alongside the sidebar panel.</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<div class="callout">
+  <p><strong>&ldquo;Ollama didn't respond within Ns&rdquo;</strong> &mdash; default timeout is 180s. The <em>first</em> request after Ollama's been idle can take longer than that just to load the model into memory. Raise the timeout in Settings if this happens regularly. <code>ollama ps</code> shows whether a model is currently loaded.</p>
+</div>
+<ul>
+  <li>Clicking <strong>Fetch</strong> in Settings closes and reopens the dialog to refresh the model list &mdash; other field edits carry over, but it'll flash shut and reopen rather than updating in place.</li>
+  <li>No streaming &mdash; you wait for the full response before it's inserted.</li>
+  <li>If the sidebar panel doesn't show up at all, try running LibreOffice from a terminal (<code>soffice --writer</code>) so any Python error prints there.</li>
+</ul>
+
+<footer>
+  RedactAI &mdash; source is maintained privately; this site and the
+  <a href="https://github.com/RunningWithScrewDrivers/RedactAI-releases/releases">releases</a>
+  are published from it automatically.
+</footer>
+
 </body>
 </html>
