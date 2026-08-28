@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>RedactAI Help</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
 <style>
   :root {
     color-scheme: light dark;
@@ -112,11 +114,25 @@
   nav.toc { margin: 1.5rem 0 2rem; }
   nav.toc ul { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
   nav.toc a { font-size: 0.92em; }
+  .header-row {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+  .header-row img {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+  .header-row h1 { margin-bottom: 0; }
 </style>
 </head>
 <body>
 
-<h1>RedactAI</h1>
+<div class="header-row">
+  <img src="assets/redactai-icon.png" alt="RedactAI icon" width="64" height="64">
+  <h1>RedactAI</h1>
+</div>
 <p class="tagline">A LibreOffice Writer extension that talks to a local Ollama server for drafting, brainstorming, and rewriting text.</p>
 
 <div class="btn-row">
