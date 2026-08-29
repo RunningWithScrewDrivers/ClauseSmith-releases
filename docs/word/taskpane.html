@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ClauseSmith</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Office.js MUST be loaded from this CDN URL, not bundled - Word
+     resolves it against the running Office version at load time. -->
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+<link rel="stylesheet" href="taskpane.css" />
+</head>
+<body>
+
+<!--
+  Layout contract: the pane itself NEVER scrolls. body is a fixed-height
+  flex column, the two text areas are the only things that grow, and they
+  scroll internally when their content is long. Everything else is fixed
+  height, so every control stays reachable at any pane size without the
+  user hunting for it - this add-in is meant to sit docked beside the
+  document permanently, so a scrollbar that hides the commit buttons is a
+  real cost, not a cosmetic one.
+
+  Note there is deliberately no <h1>ClauseSmith</h1>: Word's own task-pane
+  chrome already renders the add-in name directly above this content, and
+  repeating it wasted a whole row.
+-->
+
+<div id="statusStrip" class="status-strip">
+  <span id="statusDot" class="dot dot-checking" aria-hidden="true"></span>
+  <span id="statusText" class="status-text">Checking Ollama…</span>
+  <button id="settingsToggle" class="icon-btn" title="Settings" aria-label="Settings">&#9881;</button>
+</div>
+
+<main id="mainView" class="view">
+
+  <label class="field-label" for="originalPreview">Original <span class="hint">(from selection)</span></label>
+  <textarea id="originalPreview" class="grow" readonly></textarea>
+
+  <div class="quick-actions" id="quickActions">
+    <!-- populated from REWRITE_ACTIONS at startup -->
+  </div>
+
+  <div class="custom-row">
+    <input id="customInstruction" type="text" placeholder="Custom instruction…" aria-label="Custom instruction" />
+    <button id="applyCustomBtn">Apply</button>
+  </div>
+
+  <label class="field-label" for="suggested">Suggested <span class="hint">(editable)</span></label>
+  <textarea id="suggested" class="grow grow-more"></textarea>
+
+  <div class="commit-row">
+    <button id="replaceBtn" class="primary">Replace Selection</button>
+    <button id="insertBelowBtn" class="primary">Insert Below</button>
+  </div>
+
+  <div class="bottom-bar">
+    <span id="statusLabel" class="status-label"></span>
+    <button id="copyBtn" class="mini">Copy</button>
+    <button id="discardBtn" class="mini">Discard</button>
+  </div>
+
+</main>
+
+<section id="settingsView" class="view hidden">
+
+  <label class="field-label" for="endpoint">Endpoint</label>
+  <input id="endpoint" type="text" />
+
+  <label class="field-label" for="modelSelect">Model</label>
+  <div class="custom-row">
+    <select id="modelSelect"></select>
+    <button id="fetchModelsBtn">Fetch</button>
+  </div>
+
+  <div class="settings-pair">
+    <div>
+      <label class="field-label" for="temperature">Temperature</label>
+      <input id="temperature" type="text" />
+    </div>
+    <div>
+      <label class="field-label" for="timeout">Timeout (s)</label>
+      <input id="timeout" type="text" />
+    </div>
+  </div>
+
+  <label class="field-label" for="systemPrompt">System prompt</label>
+  <textarea id="systemPrompt" class="grow"></textarea>
+
+  <div class="commit-row">
+    <button id="saveSettingsBtn" class="primary">Save</button>
+    <button id="cancelSettingsBtn">Cancel</button>
+  </div>
+
+  <div class="bottom-bar">
+    <span id="settingsStatus" class="status-label"></span>
+  </div>
+
+</section>
+
+<script type="module" src="taskpane.js"></script>
+</body>
+</html>
